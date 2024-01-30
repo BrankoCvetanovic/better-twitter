@@ -27,3 +27,10 @@ body {
 main{
   padding: 5% 20%;
 }
+.layout{
+  padding:4% 20%;
+}
+.header a{
+  color: #17252A;
+  text-decoration-line: none;
+}
