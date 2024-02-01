@@ -1,5 +1,4 @@
 @import "config";
-@import 'responsive';
 
 
 @mixin transition-ease {
@@ -11,10 +10,10 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
 }
-  
+.header{}
 
 .nav{
-    visibility: hidden;
+    visibility: visible;
     font-family: 'Roboto', sans-serif;
     display: flex;
     align-items: center;
@@ -43,13 +42,12 @@ body {
 .menu-btn {
     visibility: hidden;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     right: 1rem;
     top: 1rem;
     height: 20px;
     width: 28px;
     cursor: pointer;
-    @include transition-ease;
   
     &__burger {
       position: absolute;
@@ -58,7 +56,6 @@ body {
       width: 28px;
       height: 3px;
       background:$secondary-color;
-      @include transition-ease;
   
       &::before {
         content: '';
@@ -67,7 +64,6 @@ body {
         width: 28px;
         height: 3px;
         background: $secondary-color;
-        @include transition-ease;
       }
   
       &::after {
@@ -77,24 +73,40 @@ body {
         width: 20px;
         height: 3px;
         background:$secondary-color;
-        @include transition-ease;
       }
   
-      &.open {
-        transform: rotate(720deg);
-        background: transparent;
-  
-        &::before {
-          transform: rotate(45deg) translate(5px, 8px);
-        }
-  
-        &::after {
-          width: 28px;
-          transform: rotate(-45deg) translate(3px, -7px);
-        }
-      }
     }
   }
+@include media-md{
+  .menu-btn{
+    visibility: visible;
+  }
+  .header{
+    position: absolute;
+  }
+  .nav{
+    background-color:#3aafa9e5;
+    visibility: hidden;
+    z-index: 1;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    justify-content: center;
+    .actions{
+      flex-direction: column;
+      a{font-size: 1.5rem;}
+    }
+    .sign-btn{
+      margin-top: 20px;
+      font-size: 1.5rem;
+    }
+    img{
+     position: absolute;
+     top:0
+    }
+  }
+}
+
 .layout{
     padding:4% 20%;
 }

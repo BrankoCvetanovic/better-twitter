@@ -8,7 +8,7 @@ import { useAppDispatch } from "../store/hooks";
 import { authSliceActions } from "../store";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const dispacher = useAppDispatch();
 
   function HandleOpenMenu() {
@@ -16,7 +16,7 @@ export default function Header() {
   }
 
   function handleOpenLoginForm() {
-    dispacher(authSliceActions.toggleOn());
+    dispacher(authSliceActions.toggleFormOn());
   }
 
   return (
@@ -38,6 +38,7 @@ export default function Header() {
           </Button>
         </div>
         <Button
+          className="sign-btn"
           onClick={handleOpenLoginForm}
           sx={{ color: "#17252A" }}
           size="medium"

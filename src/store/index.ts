@@ -2,19 +2,26 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 interface AuthState {
   isOpen: boolean;
+  isSignIn: boolean;
 }
 
-const initialAuthState: AuthState = { isOpen: false };
+const initialAuthState: AuthState = { isOpen: false, isSignIn: true };
 
 const authSlice = createSlice({
   name: "auth",
   initialState: initialAuthState,
   reducers: {
-    toggleOn(state) {
+    toggleFormOn(state) {
       state.isOpen = true;
     },
-    toggleOff(state) {
+    toggleFormOff(state) {
       state.isOpen = false;
+    },
+    toogleSignIn(state) {
+      state.isSignIn = true;
+    },
+    toogleSignUp(state) {
+      state.isSignIn = false;
     },
   },
 });

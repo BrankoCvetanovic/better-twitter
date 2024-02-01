@@ -10,6 +10,7 @@ const LoginModal = () => {
   const dispacher = useAppDispatch();
   const dialog = useRef<HTMLDialogElement>(null);
   const isOpen = useAppSelector((state) => state.auth.isOpen);
+  const isSignIn = useAppSelector((state) => state.auth.isSignIn);
   if (isOpen) {
     dialog.current?.showModal();
   } else {
@@ -17,7 +18,7 @@ const LoginModal = () => {
   }
 
   function handleCloseForm() {
-    dispacher(authSliceActions.toggleOff());
+    dispacher(authSliceActions.toggleFormOff());
   }
 
   return createPortal(
@@ -26,7 +27,11 @@ const LoginModal = () => {
         <IconButton onClick={handleCloseForm} aria-label="close">
           <CloseIcon />
         </IconButton>
-        <SignIn />
+        {isSignIn ? (
+          <SignIn isSignIn={isSignIn} title="Sign In" />
+        ) : (
+          <SignIn isSignIn={isSignIn} title="Sign Up" />
+        )}
       </div>
     </dialog>,
     document.getElementById("modal")!

@@ -2,7 +2,7 @@ $primary-color:#3AAFA9;
 $secondary-color:#17252A;
 $mobile: 600px;
 @mixin media-md {
-    @media screen and (min-width: 768px) {
+    @media screen and (max-width: 700px) {
         @content;
 }
 }
