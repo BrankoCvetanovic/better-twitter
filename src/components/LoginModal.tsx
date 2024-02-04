@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { useAppDispatch } from "../store/hooks";
 import { authSliceActions } from "../store";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -9,13 +9,10 @@ import SignIn from "./SingIn";
 const LoginModal = () => {
   const dispacher = useAppDispatch();
   const dialog = useRef<HTMLDialogElement>(null);
-  const isOpen = useAppSelector((state) => state.auth.isOpen);
-  const isSignIn = useAppSelector((state) => state.auth.isSignIn);
-  if (isOpen) {
+
+  useEffect(() => {
     dialog.current?.showModal();
-  } else {
-    dialog.current?.close();
-  }
+  }, []);
 
   function handleCloseForm() {
     dispacher(authSliceActions.toggleFormOff());
@@ -27,11 +24,7 @@ const LoginModal = () => {
         <IconButton onClick={handleCloseForm} aria-label="close">
           <CloseIcon />
         </IconButton>
-        {isSignIn ? (
-          <SignIn isSignIn={isSignIn} title="Sign In" />
-        ) : (
-          <SignIn isSignIn={isSignIn} title="Sign Up" />
-        )}
+        <SignIn />
       </div>
     </dialog>,
     document.getElementById("modal")!

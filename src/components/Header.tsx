@@ -1,15 +1,18 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import logo from "../asets/logo.png";
 import LoginModal from "./LoginModal";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { authSliceActions } from "../store";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const dispacher = useAppDispatch();
+  const modalIsOpen = useAppSelector((state) => state.auth.isOpen);
+  const isLoged = useAppSelector((state) => state.auth.isLoged);
+  const navigate = useNavigate();
 
   function HandleOpenMenu() {
     setIsOpen((prev) => !prev);
@@ -17,6 +20,13 @@ export default function Header() {
 
   function handleOpenLoginForm() {
     dispacher(authSliceActions.toggleFormOn());
+  }
+
+  function handleLogOut() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    navigate("/");
+    dispacher(authSliceActions.toggleIsLoggedOf());
   }
 
   return (
@@ -33,21 +43,35 @@ export default function Header() {
           <Button size="large" variant="text">
             <NavLink to="/">Home</NavLink>
           </Button>
-          <Button size="large" variant="text">
-            <NavLink to="/profile">My Profile</NavLink>
-          </Button>
+          {isLoged && (
+            <Button size="large" variant="text">
+              <NavLink to="/profile">My Profile</NavLink>
+            </Button>
+          )}
         </div>
-        <Button
-          className="sign-btn"
-          onClick={handleOpenLoginForm}
-          sx={{ color: "#17252A" }}
-          size="medium"
-          variant="contained"
-        >
-          Sign In
-        </Button>
+        {!isLoged ? (
+          <Button
+            className="sign-btn"
+            onClick={handleOpenLoginForm}
+            sx={{ color: "#17252A" }}
+            size="medium"
+            variant="contained"
+          >
+            Sign In
+          </Button>
+        ) : (
+          <Button
+            className="sign-btn"
+            onClick={handleLogOut}
+            sx={{ color: "#17252A" }}
+            size="medium"
+            variant="text"
+          >
+            Log Out
+          </Button>
+        )}
       </div>
-      <LoginModal />
+      {modalIsOpen && <LoginModal />}
     </div>
   );
 }

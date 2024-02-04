@@ -2,10 +2,10 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 interface AuthState {
   isOpen: boolean;
-  isSignIn: boolean;
+  isLoged: boolean;
 }
 
-const initialAuthState: AuthState = { isOpen: false, isSignIn: true };
+const initialAuthState: AuthState = { isOpen: false, isLoged: false };
 
 const authSlice = createSlice({
   name: "auth",
@@ -17,11 +17,11 @@ const authSlice = createSlice({
     toggleFormOff(state) {
       state.isOpen = false;
     },
-    toogleSignIn(state) {
-      state.isSignIn = true;
+    toggleIsLogedOn(state) {
+      state.isLoged = true;
     },
-    toogleSignUp(state) {
-      state.isSignIn = false;
+    toggleIsLoggedOf(state) {
+      state.isLoged = false;
     },
   },
 });
