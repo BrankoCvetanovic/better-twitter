@@ -18,6 +18,10 @@ body {
   margin: 0;
 }
 
+.header {
+  box-shadow: 1px -1px 10px 4px rgba(0, 0, 0, 0.19);
+}
+
 .nav {
   visibility: visible;
   font-family: "Roboto", sans-serif;
@@ -38,7 +42,7 @@ body {
   transform: translateY(0);
 }
 .nav img {
-  height: 5.5rem;
+  height: 5rem;
 }
 .nav a {
   color: #17252A;
