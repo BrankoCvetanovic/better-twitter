@@ -1,0 +1,143 @@
+.error-container {
+  padding-top: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.control-error {
+  color: #ffca99;
+  font-size: 0.8rem;
+  height: 2rem;
+  padding: 0.5rem 0;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+}
+
+.header {
+  box-shadow: 1px -1px 10px 4px rgba(0, 0, 0, 0.19);
+}
+
+.nav {
+  visibility: visible;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10%;
+  background: #3AAFA9;
+}
+.nav.open {
+  visibility: visible;
+}
+.nav .actions {
+  display: flex;
+  gap: 20px;
+}
+.nav .actions.open {
+  transform: translateY(0);
+}
+.nav img {
+  height: 5rem;
+}
+.nav a {
+  color: #17252A;
+  text-decoration-line: none;
+}
+
+.menu-btn {
+  visibility: hidden;
+  position: absolute;
+  z-index: 2;
+  right: 1rem;
+  top: 1rem;
+  height: 20px;
+  width: 28px;
+  cursor: pointer;
+}
+.menu-btn__burger {
+  position: absolute;
+  right: 0;
+  top: 0.5rem;
+  width: 28px;
+  height: 3px;
+  background: #17252A;
+}
+.menu-btn__burger::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  width: 28px;
+  height: 3px;
+  background: #17252A;
+}
+.menu-btn__burger::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  width: 20px;
+  height: 3px;
+  background: #17252A;
+}
+
+@media screen and (max-width: 700px) {
+  .menu-btn {
+    visibility: visible;
+  }
+  .header {
+    position: absolute;
+  }
+  .nav {
+    background-color: rgba(58, 175, 169, 0.8980392157);
+    visibility: hidden;
+    z-index: 1;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .nav .actions {
+    flex-direction: column;
+  }
+  .nav .actions a {
+    font-size: 1.5rem;
+  }
+  .nav .sign-btn {
+    margin-top: 20px;
+    font-size: 1.5rem;
+  }
+  .nav img {
+    position: absolute;
+    top: 0;
+  }
+}
+.layout {
+  padding: 4% 20%;
+}
+
+.home {
+  padding: 5%;
+  border-left: solid 2px #3AAFA9;
+  border-right: solid 2px #3AAFA9;
+  height: 100vh;
+}
+
+.modal {
+  border: none;
+  width: 400px;
+  min-width: 400px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+dialog::backdrop {
+  background-color: rgba(157, 158, 155, 0.37);
+}/*# sourceMappingURL=main.css.map */
