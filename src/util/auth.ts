@@ -1,4 +1,5 @@
 import { getDatabase, ref, set, get, child } from "firebase/database";
+import { redirect } from "react-router-dom";
 
 export function getAuthToken() {
   const token = localStorage.getItem("token");
@@ -7,6 +8,16 @@ export function getAuthToken() {
 export function getUserId() {
   const userId = localStorage.getItem("userId");
   return userId;
+}
+
+export function checkAuthLoader() {
+  const token = getAuthToken();
+
+  if (!token) {
+    return redirect("/");
+  } else {
+    return null;
+  }
 }
 
 export function signUpUser(userId: string, name: string, email: string) {

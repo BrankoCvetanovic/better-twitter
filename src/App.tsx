@@ -4,6 +4,7 @@ import HomePage from "./Pages/Home";
 import ProfilePage from "./Pages/Profile";
 import ErrorPage from "./Pages/Error";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { checkAuthLoader } from "./util/auth";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "", element: <HomePage /> },
-      { path: "/profile", element: <ProfilePage /> },
+      { path: "/profile", loader: checkAuthLoader, element: <ProfilePage /> },
     ],
   },
 ]);

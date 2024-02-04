@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 import { auth } from "../firebase";
 import {
   signInWithEmailAndPassword,
@@ -13,6 +13,8 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useInput from "../util/useInput";
 import {
   isEmail,
@@ -23,10 +25,22 @@ import { useAppDispatch } from "../store/hooks";
 import { authSliceActions } from "../store";
 import { signUpUser } from "../util/auth";
 
-export default function SignIn() {
+const SignIn: FC<{ onSuccsess: (type: string) => void }> = ({ onSuccsess }) => {
   const [isSignIn, setIsSignIn] = useState(true);
 
   const dispach = useAppDispatch();
+
+  const notify = (errorMessage: string) =>
+    toast.error(errorMessage, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   const {
     inputValue: nameValue,
@@ -77,30 +91,43 @@ export default function SignIn() {
             signUpUser(uId, nameValue, emailValue);
             dispach(authSliceActions.toggleIsLogedOn());
             dispach(authSliceActions.toggleFormOff());
+            onSuccsess("Sing Up");
           })
           .catch((error: any) => {
-            console.log(error);
+            if (error.message.includes("network")) {
+              notify("Sorry, connection failed.");
+            } else {
+              notify("An error happend.");
+            }
           });
       }
       return;
     }
     signInWithEmailAndPassword(auth, emailValue, passValue)
       .then((useCredetial: any) => {
-        console.log("je");
         const token = useCredetial.user.accessToken;
         const uId = useCredetial.user.uid;
         localStorage.setItem("token", token);
         localStorage.setItem("userId", uId);
         dispach(authSliceActions.toggleIsLogedOn());
         dispach(authSliceActions.toggleFormOff());
+        onSuccsess("Log In");
       })
       .catch((error: any) => {
-        console.log(error);
+        if (error.message.includes("network")) {
+          notify("Sorry, connection failed.");
+        } else if (error.message.includes("invalid-credential")) {
+          notify("Wrong e-mail or password.");
+        } else {
+          notify("An error happend.");
+        }
       });
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      <ToastContainer />
+      <ToastContainer position="bottom-center" autoClose={5000} />
       <CssBaseline />
       <Box
         sx={{
@@ -209,4 +236,5 @@ export default function SignIn() {
       </Box>
     </Container>
   );
-}
+};
+export default SignIn;

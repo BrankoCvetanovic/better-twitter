@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, FC } from "react";
 import { createPortal } from "react-dom";
 import { useAppDispatch } from "../store/hooks";
 import { authSliceActions } from "../store";
@@ -6,7 +6,9 @@ import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SignIn from "./SingIn";
 
-const LoginModal = () => {
+const LoginModal: FC<{ onSuccsess: (type: string) => void }> = ({
+  onSuccsess,
+}) => {
   const dispacher = useAppDispatch();
   const dialog = useRef<HTMLDialogElement>(null);
 
@@ -24,7 +26,7 @@ const LoginModal = () => {
         <IconButton onClick={handleCloseForm} aria-label="close">
           <CloseIcon />
         </IconButton>
-        <SignIn />
+        <SignIn onSuccsess={onSuccsess} />
       </div>
     </dialog>,
     document.getElementById("modal")!
