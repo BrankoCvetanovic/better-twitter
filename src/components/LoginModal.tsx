@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, FC } from "react";
 import { createPortal } from "react-dom";
 import { useAppDispatch } from "../store/hooks";
 import { authSliceActions } from "../store";
@@ -6,7 +6,7 @@ import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SignIn from "./SingIn";
 
-const LoginModal = () => {
+export default function LoginModal() {
   const dispacher = useAppDispatch();
   const dialog = useRef<HTMLDialogElement>(null);
 
@@ -29,6 +29,4 @@ const LoginModal = () => {
     </dialog>,
     document.getElementById("modal")!
   );
-};
-
-export default LoginModal;
+}

@@ -1,11 +1,14 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import logo from "../asets/logo.png";
 import LoginModal from "./LoginModal";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { authSliceActions } from "../store";
+
+import "react-toastify/dist/ReactToastify.css";
+import { clearAuthTokens } from "../util/auth";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,17 +17,22 @@ export default function Header() {
   const isLoged = useAppSelector((state) => state.auth.isLoged);
   const navigate = useNavigate();
 
-  function HandleOpenMenu() {
+  function handleOpenMenu() {
     setIsOpen((prev) => !prev);
+  }
+
+  function handleCloseMenu() {
+    setIsOpen(false);
   }
 
   function handleOpenLoginForm() {
     dispacher(authSliceActions.toggleFormOn());
+    handleCloseMenu();
   }
 
   function handleLogOut() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
+    clearAuthTokens();
+    handleCloseMenu();
     navigate("/");
     dispacher(authSliceActions.toggleIsLoggedOf());
   }
@@ -32,7 +40,7 @@ export default function Header() {
   return (
     <div className="header">
       <div
-        onClick={HandleOpenMenu}
+        onClick={handleOpenMenu}
         className={isOpen ? "menu-btn open" : "menu-btn"}
       >
         <span className="menu-btn__burger"></span>
@@ -40,11 +48,11 @@ export default function Header() {
       <div className={isOpen ? "nav open" : "nav"}>
         <img src={logo} alt="" />
         <div className={isOpen ? "actions open" : "actions"}>
-          <Button size="large" variant="text">
+          <Button onClick={handleCloseMenu} size="large" variant="text">
             <NavLink to="/">Home</NavLink>
           </Button>
           {isLoged && (
-            <Button size="large" variant="text">
+            <Button onClick={handleCloseMenu} size="large" variant="text">
               <NavLink to="/profile">My Profile</NavLink>
             </Button>
           )}

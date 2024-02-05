@@ -22,6 +22,10 @@ body {
   box-shadow: 1px -1px 10px 4px rgba(0, 0, 0, 0.19);
 }
 
+#root {
+  width: 100vw;
+}
+
 .nav {
   visibility: visible;
   font-family: "Roboto", sans-serif;
@@ -89,16 +93,19 @@ body {
     visibility: visible;
   }
   .header {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
   .nav {
     background-color: rgba(58, 175, 169, 0.8980392157);
     visibility: hidden;
     z-index: 1;
-    height: 100vh;
-    width: 100vw;
     flex-direction: column;
     justify-content: center;
+    height: 100%;
   }
   .nav .actions {
     flex-direction: column;

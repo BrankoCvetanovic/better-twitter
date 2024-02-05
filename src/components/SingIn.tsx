@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 import { auth } from "../firebase";
 import {
   signInWithEmailAndPassword,
@@ -13,6 +13,8 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useInput from "../util/useInput";
 import {
   isEmail,
@@ -68,6 +70,7 @@ export default function SignIn() {
     }
     if (!isSignIn) {
       if (isEqualsToOtherValue(passValue, confValue)) {
+        const id = toast.loading("Please wait...");
         createUserWithEmailAndPassword(auth, emailValue, passValue)
           .then((useCredetial: any) => {
             const token = useCredetial.user.accessToken;
@@ -75,32 +78,70 @@ export default function SignIn() {
             localStorage.setItem("token", token);
             localStorage.setItem("userId", uId);
             signUpUser(uId, nameValue, emailValue);
-            dispach(authSliceActions.toggleIsLogedOn());
-            dispach(authSliceActions.toggleFormOff());
+            toast.update(id, {
+              render: "Your account has been created!",
+              type: "success",
+              isLoading: false,
+            });
+            setTimeout(() => {
+              dispach(authSliceActions.toggleIsLogedOn());
+              dispach(authSliceActions.toggleFormOff());
+            }, 1500);
           })
           .catch((error: any) => {
-            console.log(error);
+            console.log(error.message);
+            let errorMess = "Something went wrong";
+            if (error.message.includes("network")) {
+              errorMess = "Sorry, connection failed.";
+            }
+            if (error.message.includes("invalid-email")) {
+              errorMess = "Please enter a valid e-mail";
+            }
+            toast.update(id, {
+              render: errorMess,
+              type: "error",
+              isLoading: false,
+              autoClose: 4000,
+            });
           });
       }
       return;
     }
+    const id = toast.loading("Please wait...");
     signInWithEmailAndPassword(auth, emailValue, passValue)
       .then((useCredetial: any) => {
-        console.log("je");
         const token = useCredetial.user.accessToken;
         const uId = useCredetial.user.uid;
         localStorage.setItem("token", token);
         localStorage.setItem("userId", uId);
-        dispach(authSliceActions.toggleIsLogedOn());
-        dispach(authSliceActions.toggleFormOff());
+        toast.update(id, {
+          render: "LOGIN SUCCESSFUL",
+          type: "success",
+          isLoading: false,
+        });
+        setTimeout(() => {
+          dispach(authSliceActions.toggleIsLogedOn());
+          dispach(authSliceActions.toggleFormOff());
+        }, 1500);
       })
       .catch((error: any) => {
-        console.log(error);
+        let errorMess = "Something went wrong";
+        if (error.message.includes("network")) {
+          errorMess = "Sorry, connection failed.";
+        } else if (error.message.includes("invalid-credential")) {
+          errorMess = "Wrong e-mail or password.";
+        }
+        toast.update(id, {
+          render: errorMess,
+          type: "error",
+          isLoading: false,
+        });
       });
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      <ToastContainer position="top-center" hideProgressBar />
       <CssBaseline />
       <Box
         sx={{
