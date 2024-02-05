@@ -1,23 +1,23 @@
 import { getDatabase, ref, set, get, child } from "firebase/database";
 import { redirect } from "react-router-dom";
 
-export function getAuthToken() {
-  const token = localStorage.getItem("token");
-  return token;
-}
 export function getUserId() {
   const userId = localStorage.getItem("userId");
   return userId;
 }
 
 export function checkAuthLoader() {
-  const token = getAuthToken();
+  const userId = getUserId();
 
-  if (!token) {
+  if (!userId) {
     return redirect("/");
   } else {
     return null;
   }
+}
+export function clearAuthTokens() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("userId");
 }
 
 export function signUpUser(userId: string, name: string, email: string) {

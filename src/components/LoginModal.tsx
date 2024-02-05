@@ -6,9 +6,7 @@ import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SignIn from "./SingIn";
 
-const LoginModal: FC<{ onSuccsess: (type: string) => void }> = ({
-  onSuccsess,
-}) => {
+export default function LoginModal() {
   const dispacher = useAppDispatch();
   const dialog = useRef<HTMLDialogElement>(null);
 
@@ -26,11 +24,9 @@ const LoginModal: FC<{ onSuccsess: (type: string) => void }> = ({
         <IconButton onClick={handleCloseForm} aria-label="close">
           <CloseIcon />
         </IconButton>
-        <SignIn onSuccsess={onSuccsess} />
+        <SignIn />
       </div>
     </dialog>,
     document.getElementById("modal")!
   );
-};
-
-export default LoginModal;
+}

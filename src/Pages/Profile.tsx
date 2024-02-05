@@ -14,7 +14,7 @@ export default function ProfilePage() {
   return (
     <>
       <h1>Profile Page</h1>
-      {isPending && <CircularProgress size="large" />}
+      {isPending && <CircularProgress />}
       {isError && <p>{error.message}</p>}
       {data && <p>{data.username}</p>}
     </>

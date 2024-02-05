@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import logo from "../asets/logo.png";
 import LoginModal from "./LoginModal";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { authSliceActions } from "../store";
-import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
+import { clearAuthTokens } from "../util/auth";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,33 +31,14 @@ export default function Header() {
   }
 
   function handleLogOut() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
+    clearAuthTokens();
     handleCloseMenu();
     navigate("/");
     dispacher(authSliceActions.toggleIsLoggedOf());
   }
-  const notify = (type: string) =>
-    toast.success(`${type} Succsessful!`, {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
 
-  function handleSuccsess(type: string) {
-    console.log(type);
-    setTimeout(() => {
-      notify(type);
-    }, 1000);
-  }
   return (
     <div className="header">
-      <ToastContainer />
       <div
         onClick={handleOpenMenu}
         className={isOpen ? "menu-btn open" : "menu-btn"}
@@ -97,7 +79,7 @@ export default function Header() {
           </Button>
         )}
       </div>
-      {modalIsOpen && <LoginModal onSuccsess={handleSuccsess} />}
+      {modalIsOpen && <LoginModal />}
     </div>
   );
 }

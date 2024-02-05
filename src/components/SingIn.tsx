@@ -25,22 +25,10 @@ import { useAppDispatch } from "../store/hooks";
 import { authSliceActions } from "../store";
 import { signUpUser } from "../util/auth";
 
-const SignIn: FC<{ onSuccsess: (type: string) => void }> = ({ onSuccsess }) => {
+export default function SignIn() {
   const [isSignIn, setIsSignIn] = useState(true);
 
   const dispach = useAppDispatch();
-
-  const notify = (errorMessage: string) =>
-    toast.error(errorMessage, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
 
   const {
     inputValue: nameValue,
@@ -82,6 +70,7 @@ const SignIn: FC<{ onSuccsess: (type: string) => void }> = ({ onSuccsess }) => {
     }
     if (!isSignIn) {
       if (isEqualsToOtherValue(passValue, confValue)) {
+        const id = toast.loading("Please wait...");
         createUserWithEmailAndPassword(auth, emailValue, passValue)
           .then((useCredetial: any) => {
             const token = useCredetial.user.accessToken;
@@ -89,45 +78,70 @@ const SignIn: FC<{ onSuccsess: (type: string) => void }> = ({ onSuccsess }) => {
             localStorage.setItem("token", token);
             localStorage.setItem("userId", uId);
             signUpUser(uId, nameValue, emailValue);
-            dispach(authSliceActions.toggleIsLogedOn());
-            dispach(authSliceActions.toggleFormOff());
-            onSuccsess("Sing Up");
+            toast.update(id, {
+              render: "Your account has been created!",
+              type: "success",
+              isLoading: false,
+            });
+            setTimeout(() => {
+              dispach(authSliceActions.toggleIsLogedOn());
+              dispach(authSliceActions.toggleFormOff());
+            }, 1500);
           })
           .catch((error: any) => {
+            console.log(error.message);
+            let errorMess = "Something went wrong";
             if (error.message.includes("network")) {
-              notify("Sorry, connection failed.");
-            } else {
-              notify("An error happend.");
+              errorMess = "Sorry, connection failed.";
             }
+            if (error.message.includes("invalid-email")) {
+              errorMess = "Please enter a valid e-mail";
+            }
+            toast.update(id, {
+              render: errorMess,
+              type: "error",
+              isLoading: false,
+              autoClose: 4000,
+            });
           });
       }
       return;
     }
+    const id = toast.loading("Please wait...");
     signInWithEmailAndPassword(auth, emailValue, passValue)
       .then((useCredetial: any) => {
         const token = useCredetial.user.accessToken;
         const uId = useCredetial.user.uid;
         localStorage.setItem("token", token);
         localStorage.setItem("userId", uId);
-        dispach(authSliceActions.toggleIsLogedOn());
-        dispach(authSliceActions.toggleFormOff());
-        onSuccsess("Log In");
+        toast.update(id, {
+          render: "LOGIN SUCCESSFUL",
+          type: "success",
+          isLoading: false,
+        });
+        setTimeout(() => {
+          dispach(authSliceActions.toggleIsLogedOn());
+          dispach(authSliceActions.toggleFormOff());
+        }, 1500);
       })
       .catch((error: any) => {
+        let errorMess = "Something went wrong";
         if (error.message.includes("network")) {
-          notify("Sorry, connection failed.");
+          errorMess = "Sorry, connection failed.";
         } else if (error.message.includes("invalid-credential")) {
-          notify("Wrong e-mail or password.");
-        } else {
-          notify("An error happend.");
+          errorMess = "Wrong e-mail or password.";
         }
+        toast.update(id, {
+          render: errorMess,
+          type: "error",
+          isLoading: false,
+        });
       });
   };
 
   return (
     <Container component="main" maxWidth="xs">
-      <ToastContainer />
-      <ToastContainer position="bottom-center" autoClose={5000} />
+      <ToastContainer position="top-center" hideProgressBar />
       <CssBaseline />
       <Box
         sx={{
@@ -236,5 +250,4 @@ const SignIn: FC<{ onSuccsess: (type: string) => void }> = ({ onSuccsess }) => {
       </Box>
     </Container>
   );
-};
-export default SignIn;
+}

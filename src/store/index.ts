@@ -1,5 +1,5 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-import { getAuthToken } from "../util/auth";
+import { getUserId } from "../util/auth";
 
 interface AuthState {
   isOpen: boolean;
@@ -8,7 +8,7 @@ interface AuthState {
 
 const initialAuthState: AuthState = { isOpen: false, isLoged: false };
 
-const token = getAuthToken();
+const token = getUserId();
 
 if (token) {
   initialAuthState.isLoged = true;
