@@ -6,7 +6,13 @@ interface AuthState {
   isLoged: boolean;
 }
 
+interface PostState {
+  isOpen: boolean;
+}
+
 const initialAuthState: AuthState = { isOpen: false, isLoged: false };
+
+const initialNewPostState: PostState = { isOpen: false };
 
 const token = getUserId();
 
@@ -33,11 +39,25 @@ const authSlice = createSlice({
   },
 });
 
+const newPostSlice = createSlice({
+  name: "newPost",
+  initialState: initialNewPostState,
+  reducers: {
+    toggleFormOn(state) {
+      state.isOpen = true;
+    },
+    toggleFormOff(state) {
+      state.isOpen = false;
+    },
+  },
+});
+
 const store = configureStore({
-  reducer: { auth: authSlice.reducer },
+  reducer: { auth: authSlice.reducer, newPost: newPostSlice.reducer },
 });
 
 export const authSliceActions = authSlice.actions;
+export const newPostSliceActions = newPostSlice.actions;
 
 export default store;
 
