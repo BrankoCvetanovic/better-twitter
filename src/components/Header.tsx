@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useState, FC } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, IconButton } from "@mui/material";
 import logo from "../asets/logo.png";

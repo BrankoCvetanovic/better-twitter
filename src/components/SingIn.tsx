@@ -23,7 +23,7 @@ import {
 } from "../util/validation";
 import { useAppDispatch } from "../store/hooks";
 import { authSliceActions } from "../store";
-import { signUpUser } from "../util/auth";
+import { addUserToDatabase } from "../util/auth";
 
 export default function SignIn() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -73,11 +73,9 @@ export default function SignIn() {
         const id = toast.loading("Please wait...");
         createUserWithEmailAndPassword(auth, emailValue, passValue)
           .then((useCredetial: any) => {
-            const token = useCredetial.user.accessToken;
             const uId = useCredetial.user.uid;
-            localStorage.setItem("token", token);
             localStorage.setItem("userId", uId);
-            signUpUser(uId, nameValue, emailValue);
+            addUserToDatabase(uId, nameValue, emailValue);
             toast.update(id, {
               render: "Your account has been created!",
               type: "success",
@@ -110,9 +108,7 @@ export default function SignIn() {
     const id = toast.loading("Please wait...");
     signInWithEmailAndPassword(auth, emailValue, passValue)
       .then((useCredetial: any) => {
-        const token = useCredetial.user.accessToken;
         const uId = useCredetial.user.uid;
-        localStorage.setItem("token", token);
         localStorage.setItem("userId", uId);
         toast.update(id, {
           render: "LOGIN SUCCESSFUL",
@@ -122,7 +118,7 @@ export default function SignIn() {
         setTimeout(() => {
           dispach(authSliceActions.toggleIsLogedOn());
           dispach(authSliceActions.toggleFormOff());
-        }, 1500);
+        }, 1100);
       })
       .catch((error: any) => {
         let errorMess = "Something went wrong";

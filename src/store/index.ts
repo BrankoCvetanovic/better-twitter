@@ -6,13 +6,7 @@ interface AuthState {
   isLoged: boolean;
 }
 
-interface PostState {
-  isOpen: boolean;
-}
-
 const initialAuthState: AuthState = { isOpen: false, isLoged: false };
-
-const initialNewPostState: PostState = { isOpen: false };
 
 const token = getUserId();
 
@@ -39,6 +33,13 @@ const authSlice = createSlice({
   },
 });
 
+interface PostState {
+  isOpen: boolean;
+  postsCount: number;
+}
+
+const initialNewPostState: PostState = { isOpen: false, postsCount: 0 };
+
 const newPostSlice = createSlice({
   name: "newPost",
   initialState: initialNewPostState,
@@ -48,6 +49,9 @@ const newPostSlice = createSlice({
     },
     toggleFormOff(state) {
       state.isOpen = false;
+    },
+    updatePostState(state) {
+      state.postsCount += 1;
     },
   },
 });

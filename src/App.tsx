@@ -5,12 +5,15 @@ import ProfilePage from "./Pages/Profile";
 import ErrorPage from "./Pages/Error";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { checkAuthLoader } from "./util/auth";
+import { loader } from "./Pages/Root";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
+    id: "root",
+    loader: loader,
     children: [
       { path: "", element: <HomePage /> },
       { path: "/profile", loader: checkAuthLoader, element: <ProfilePage /> },
