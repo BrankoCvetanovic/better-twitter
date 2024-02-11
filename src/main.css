@@ -130,7 +130,7 @@ body {
   padding: 5%;
   border-left: solid 2px #3AAFA9;
   border-right: solid 2px #3AAFA9;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .modal {

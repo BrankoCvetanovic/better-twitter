@@ -24,11 +24,15 @@ import {
 import { useAppDispatch } from "../store/hooks";
 import { authSliceActions } from "../store";
 import { addUserToDatabase } from "../util/auth";
+import { useRevalidator } from "react-router-dom";
+import { getUserData } from "../util/auth";
 
 export default function SignIn() {
   const [isSignIn, setIsSignIn] = useState(true);
 
   const dispach = useAppDispatch();
+
+  const revalidator = useRevalidator();
 
   const {
     inputValue: nameValue,
@@ -75,12 +79,16 @@ export default function SignIn() {
           .then((useCredetial: any) => {
             const uId = useCredetial.user.uid;
             localStorage.setItem("userId", uId);
+            getUserData(uId).then((response: any) => {
+              dispach(authSliceActions.setUserName(response.userName));
+            });
             addUserToDatabase(uId, nameValue, emailValue);
             toast.update(id, {
               render: "Your account has been created!",
               type: "success",
               isLoading: false,
             });
+            revalidator.revalidate();
             setTimeout(() => {
               dispach(authSliceActions.toggleIsLogedOn());
               dispach(authSliceActions.toggleFormOff());
@@ -110,11 +118,16 @@ export default function SignIn() {
       .then((useCredetial: any) => {
         const uId = useCredetial.user.uid;
         localStorage.setItem("userId", uId);
+        getUserData(uId).then((response: any) => {
+          dispach(authSliceActions.setUserName(response.username));
+        });
+
         toast.update(id, {
           render: "LOGIN SUCCESSFUL",
           type: "success",
           isLoading: false,
         });
+        revalidator.revalidate();
         setTimeout(() => {
           dispach(authSliceActions.toggleIsLogedOn());
           dispach(authSliceActions.toggleFormOff());
@@ -131,6 +144,7 @@ export default function SignIn() {
           render: errorMess,
           type: "error",
           isLoading: false,
+          autoClose: 4000,
         });
       });
   };

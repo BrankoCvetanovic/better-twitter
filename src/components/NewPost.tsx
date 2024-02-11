@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { newPostSliceActions } from "../store";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button, IconButton } from "@mui/material";
@@ -14,6 +14,9 @@ export default function () {
   const dialog = useRef<HTMLDialogElement>(null);
   const imgPicker = useRef<HTMLInputElement>(null);
   const postText = useRef<HTMLTextAreaElement>(null);
+
+  const userName = useAppSelector((state) => state.auth.userName);
+  console.log(userName);
 
   const revalidator = useRevalidator();
 
@@ -46,13 +49,14 @@ export default function () {
     const toastId = toast.loading("Please wait...");
     let imageName = "";
     if (newImage) {
-      imageName = newImage?.name.toString() + Date.now().toString();
+      imageName = Date.now().toString();
     }
     const uId = getUserId();
     const isTextError = await uploadPost(
       uId!,
       postText.current?.value!,
-      imageName
+      imageName,
+      userName
     );
     let isImageError = false;
     if (newImage) {
@@ -75,8 +79,8 @@ export default function () {
         autoClose: 4000,
       });
     });
+    revalidator.revalidate();
     setTimeout(() => {
-      revalidator.revalidate();
       dispacher(newPostSliceActions.toggleFormOff());
       dispacher(newPostSliceActions.updatePostState());
     }, 1000);

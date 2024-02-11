@@ -122,7 +122,7 @@ body {
     padding: 5%;
     border-left:solid 2px $primary-color;
     border-right:solid 2px $primary-color;
-    height: 100vh;
+    min-height: 100vh;
 }
 .modal{
   border: none;
@@ -216,7 +216,7 @@ dialog::backdrop {
 }
 ul{
   list-style-type: none;
-  
+
 }
 .post{
   display: flex;

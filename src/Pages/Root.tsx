@@ -3,16 +3,12 @@ import Header from "../components/Header";
 import { useEffect } from "react";
 import { clearAuthTokens, getUserId } from "../util/auth";
 import { useAppDispatch } from "../store/hooks";
-import { authSliceActions } from "../store";
+import { authSliceActions, newPostSliceActions } from "../store";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../firebase";
 
 export default function RootLayout() {
   const dispach = useAppDispatch();
-
-  const dataImage = useLoaderData();
-
-  console.log(dataImage);
 
   useEffect(() => {
     const uid = getUserId();
