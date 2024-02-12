@@ -12,6 +12,56 @@
   padding: 0.5rem 0;
 }
 
+.post {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  background: rgb(255, 255, 255);
+  min-height: 150px;
+  padding: 15px;
+  border: solid rgb(226, 224, 224) 1px;
+}
+.post .title {
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+.post .text {
+  font-size: 0.9rem;
+  padding-bottom: 10px;
+  padding-left: 5px;
+}
+.post img {
+  border-radius: 10px;
+}
+.post:hover {
+  background: #e7ebee;
+}
+
+.layout {
+  padding: 4% 20%;
+}
+
+.home {
+  padding: 5%;
+  border-left: solid 2px #3AAFA9;
+  border-right: solid 2px #3AAFA9;
+  min-height: 100vh;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+@media screen and (max-width: 700px) {
+  .layout {
+    padding: 4% 4%;
+  }
+  .home {
+    border: none;
+  }
+}
 body {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
@@ -122,17 +172,6 @@ body {
     top: 0;
   }
 }
-.layout {
-  padding: 4% 20%;
-}
-
-.home {
-  padding: 5%;
-  border-left: solid 2px #3AAFA9;
-  border-right: solid 2px #3AAFA9;
-  min-height: 100vh;
-}
-
 .modal {
   border: none;
   width: 400px;
@@ -158,24 +197,24 @@ dialog::backdrop {
   z-index: -1;
 }
 
-.newPost {
+.new-post-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
 }
-.newPost .close {
+.new-post-container .close {
   display: flex;
   width: 100%;
   justify-content: flex-end;
 }
-.newPost .actions {
+.new-post-container .actions {
   margin-top: 2rem;
   display: flex;
   width: 100%;
   justify-content: space-between;
 }
-.newPost .image-btn {
+.new-post-container .image-btn {
   display: flex;
   align-items: center;
   font-size: 0.8125rem;
@@ -185,7 +224,7 @@ dialog::backdrop {
   background-color: #1976d2;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
-.newPost .image-btn:hover {
+.new-post-container .image-btn:hover {
   text-decoration: none;
   background-color: #1565c0;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
@@ -226,12 +265,7 @@ ul {
   list-style-type: none;
 }
 
-.post {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  background: rgb(247, 243, 243);
-  min-height: 150px;
-  padding: 15px;
-  border-radius: 10px;
+a {
+  text-decoration: none;
+  color: inherit;
 }/*# sourceMappingURL=main.css.map */

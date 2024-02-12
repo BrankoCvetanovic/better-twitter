@@ -24,7 +24,7 @@ export default function HomePage() {
     <div className="home">
       <h1>Home Page</h1>
       {isLoged && (
-        <ul>
+        <ul className="post-container">
           {posts.map((post: any) => {
             return (
               <li key={post.imageName + Math.random()}>

@@ -1,5 +1,6 @@
 @import "config";
 @import "error";
+@import "home";
 
 @mixin transition-ease {
     transition: all 0.5s ease-in-out;
@@ -81,49 +82,40 @@ body {
   
     }
   }
-@include media-md{
-  .menu-btn{
-    visibility: visible;
-  }
-  .header{
-    position: fixed;
-    top:0;
-    left:0;
-    
-    width: 100%;
-    height: 100%;
-  }
-  .nav{
-    background-color:#3aafa9e5;
-    visibility: hidden;
-    z-index: 1;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    .actions{
+  @include media-md{
+    .menu-btn{
+      visibility: visible;
+    }
+    .header{
+      position: fixed;
+      top:0;
+      left:0;
+      
+      width: 100%;
+      height: 100%;
+    }
+    .nav{
+      background-color:#3aafa9e5;
+      visibility: hidden;
+      z-index: 1;
       flex-direction: column;
-      a{font-size: 1.5rem;}
-    }
-    .sign-btn{
-      margin-top: 20px;
-      font-size: 1.5rem;
-    }
-    img{
-     position: absolute;
-     top:0
+      justify-content: center;
+      height: 100%;
+      .actions{
+        flex-direction: column;
+        a{font-size: 1.5rem;}
+      }
+      .sign-btn{
+        margin-top: 20px;
+        font-size: 1.5rem;
+      }
+      img{
+       position: absolute;
+       top:0
+      }
     }
   }
-}
 
-.layout{
-    padding:4% 20%;
-}
-.home{
-    padding: 5%;
-    border-left:solid 2px $primary-color;
-    border-right:solid 2px $primary-color;
-    min-height: 100vh;
-}
 .modal{
   border: none;
   width: 400px;
@@ -146,7 +138,7 @@ dialog::backdrop {
 	position: absolute;
 	z-index: -1;
 }
-.newPost{
+.new-post-container{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -216,14 +208,8 @@ dialog::backdrop {
 }
 ul{
   list-style-type: none;
-
 }
-.post{
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  background: rgb(247, 243, 243);
-  min-height: 150px;
-  padding: 15px;
-  border-radius: 10px;
+a{
+  text-decoration: none;
+  color:inherit
 }

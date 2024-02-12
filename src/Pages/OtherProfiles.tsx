@@ -1,19 +1,15 @@
-import { getUserPosts } from "../util/post";
-import { getUserData } from "../util/auth";
-import { getUserId } from "../util/auth";
 import { useQuery } from "@tanstack/react-query";
-import { CircularProgress } from "@mui/material";
-import { useAppSelector } from "../store/hooks";
+import { useParams } from "react-router-dom";
+import { getUserData } from "../util/auth";
+import { getUserPosts } from "../util/post";
 import Post from "../components/Post";
 
-export default function ProfilePage() {
-  const postCount = useAppSelector((state) => state.newPost.postsCount);
-
-  const uId = getUserId();
+export default function OtherProfiles() {
+  const params = useParams();
 
   const { data, error, isError, isPending } = useQuery({
-    queryFn: (userId: any) => getUserData(uId!),
-    queryKey: ["account", uId],
+    queryFn: (userId: any) => getUserData(params.userId!),
+    queryKey: ["account", params.userId],
   });
 
   const {
@@ -22,8 +18,8 @@ export default function ProfilePage() {
     isError: sd,
     isPending: aw,
   } = useQuery({
-    queryFn: (userId: any) => getUserPosts(uId!),
-    queryKey: ["posts", uId, postCount],
+    queryFn: (userId: any) => getUserPosts(params.userId!),
+    queryKey: ["posts", params.userId],
   });
 
   const posts = [];
@@ -35,11 +31,8 @@ export default function ProfilePage() {
   }
 
   return (
-    <>
-      <h1>Profile Page</h1>
-      {isPending && <CircularProgress />}
-      {isError && <p>{error.message}</p>}
-      {data && <p>{data.username}</p>}
+    <div>
+      {data && <div> {data.username} </div>}
       {posts && (
         <ul className="post-container">
           {posts.map((post: any) => {
@@ -56,6 +49,6 @@ export default function ProfilePage() {
           })}
         </ul>
       )}
-    </>
+    </div>
   );
 }

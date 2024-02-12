@@ -89,7 +89,7 @@ export default function () {
   return createPortal(
     <dialog onClose={handleCloseNewPost} className="modal" ref={dialog}>
       <ToastContainer position="top-center" hideProgressBar />
-      <div className="newPost">
+      <div className="new-post-container">
         <div className="close">
           <IconButton onClick={handleCloseNewPost}>
             <CloseIcon />

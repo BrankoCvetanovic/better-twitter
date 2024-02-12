@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Post: FC<{
   text: string;
@@ -22,14 +23,10 @@ const Post: FC<{
 
   return (
     <div className="post">
-      <h4
-        onClick={() => {
-          console.log(userId);
-        }}
-      >
+      <NavLink className={"title"} to={`/profiles/${userId}`}>
         {userName}
-      </h4>
-      <p> {text}</p>
+      </NavLink>
+      <div className="text"> {text}</div>
       {imageName && <img src={imageData[imageIndex]} alt="" />}
     </div>
   );
