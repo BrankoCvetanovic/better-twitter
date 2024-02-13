@@ -317,4 +317,10 @@ a {
 }
 .post:hover {
   background: #eef0f1;
+}
+.post .like {
+  display: flex;
+  padding-top: 7px;
+  gap: 5px;
+  align-items: center;
 }/*# sourceMappingURL=main.css.map */

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getUserData } from "../util/auth";
-import { getUserPosts } from "../util/post";
+import { getAllPosts } from "../util/post";
 import Post from "../components/Post";
 import { CircularProgress } from "@mui/material";
 
@@ -19,14 +19,16 @@ export default function OtherProfiles() {
     isError: isPostsError,
     isPending: isPostsPending,
   } = useQuery({
-    queryFn: (userId: any) => getUserPosts(params.userId!),
-    queryKey: ["posts", params.userId],
+    queryFn: getAllPosts,
+    queryKey: ["posts"],
   });
 
   const posts = [];
   if (postsData) {
     for (const key in postsData) {
-      posts.push(postsData[key]);
+      if (postsData[key].userId === params.userId!) {
+        posts.push({ data: postsData[key], postId: key });
+      }
     }
     posts.reverse();
   }
@@ -46,12 +48,14 @@ export default function OtherProfiles() {
         <ul className="post-container">
           {posts.map((post: any) => {
             return (
-              <li key={post.imageName + Math.random()}>
+              <li key={post.data.imageName + Math.random()}>
                 <Post
-                  imageName={post.imageName}
-                  text={post.postText}
-                  userName={post.userName}
-                  userId={post.userId}
+                  imageName={post.data.imageName}
+                  text={post.data.postText}
+                  userName={post.data.userName}
+                  authId={post.data.userId}
+                  likes={post.data.likes}
+                  postId={post.postId}
                 />
               </li>
             );

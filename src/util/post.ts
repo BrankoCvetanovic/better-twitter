@@ -15,23 +15,16 @@ export async function uploadPost(
 ) {
   let isTextError = false;
   const database = getDatabase();
-  const postListRef = ref(database, "users/posts/" + userId);
-  const newPostRef = push(postListRef);
   const allPostRef = ref(database, "users/allposts");
   const newAllPostRef = push(allPostRef);
-  await set(newPostRef, {
-    postText,
-    imageName,
-    userName,
-    userId,
-  }).catch(() => {
-    isTextError = true;
-  });
   await set(newAllPostRef, {
     postText,
     imageName,
     userName,
     userId,
+    likes: {
+      initil: "initil",
+    },
   }).catch(() => {
     isTextError = true;
   });
@@ -48,9 +41,9 @@ export async function uploadImage(image: File, imageName: string) {
   return isImageError;
 }
 
-export function getUserPosts(userId: string) {
+export async function addLike(postId: string, userId: string) {
   const dbRef = ref(getDatabase());
-  return get(child(dbRef, `users/posts/${userId}`))
+  const postLikes = await get(child(dbRef, `users/allposts/${postId}/likes`))
     .then((snapshot) => {
       if (snapshot.exists()) {
         return snapshot.val();
@@ -61,6 +54,39 @@ export function getUserPosts(userId: string) {
     .catch((error) => {
       throw new Error("There is no available data at the moment.");
     });
+  if (!postLikes) {
+    return;
+  }
+  if (!postLikes.hasOwnProperty(userId)) {
+    postLikes[userId] = userId;
+  }
+  const database = getDatabase();
+  const allPostRef = ref(database, `users/allposts/${postId}/likes`);
+  set(allPostRef, postLikes);
+}
+
+export async function removeLike(postId: string, userId: string) {
+  const dbRef = ref(getDatabase());
+  const postLikes = await get(child(dbRef, `users/allposts/${postId}/likes`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        throw new Error("There is no available data at the moment.");
+      }
+    })
+    .catch((error) => {
+      throw new Error("There is no available data at the moment.");
+    });
+  if (!postLikes) {
+    return;
+  }
+  if (postLikes.hasOwnProperty(userId)) {
+    postLikes[userId] = null;
+  }
+  const database = getDatabase();
+  const allPostRef = ref(database, `users/allposts/${postId}/likes`);
+  set(allPostRef, postLikes);
 }
 
 export function getAllPosts() {
