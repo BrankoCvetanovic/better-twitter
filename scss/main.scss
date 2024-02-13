@@ -277,4 +277,10 @@ a{
   &:hover{
       background: #eef0f1;
   }
+  .like{
+    display: flex;
+    padding-top: 7px;
+    gap:5px;
+    align-items: center;
+  }
 }

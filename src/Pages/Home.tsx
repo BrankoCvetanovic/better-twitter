@@ -10,13 +10,13 @@ export default function HomePage() {
 
   const { data, error, isError, isPending } = useQuery({
     queryFn: getAllPosts,
-    queryKey: ["allPosts", postCount],
+    queryKey: ["posts", postCount],
   });
 
   const posts = [];
   if (data) {
     for (const key in data) {
-      posts.push(data[key]);
+      posts.push({ data: data[key], postId: key });
     }
     posts.reverse();
   }
@@ -34,12 +34,14 @@ export default function HomePage() {
           )}
           {posts.map((post: any) => {
             return (
-              <li key={post.imageName + Math.random()}>
+              <li key={post.data.imageName + Math.random()}>
                 <Post
-                  imageName={post.imageName}
-                  text={post.postText}
-                  userName={post.userName}
-                  userId={post.userId}
+                  imageName={post.data.imageName}
+                  text={post.data.postText}
+                  userName={post.data.userName}
+                  authId={post.data.userId}
+                  likes={post.data.likes}
+                  postId={post.postId}
                 />
               </li>
             );

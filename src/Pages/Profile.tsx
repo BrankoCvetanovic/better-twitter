@@ -1,4 +1,4 @@
-import { getUserPosts } from "../util/post";
+import { getAllPosts } from "../util/post";
 import { getUserData } from "../util/auth";
 import { getUserId } from "../util/auth";
 import { useQuery } from "@tanstack/react-query";
@@ -22,14 +22,16 @@ export default function ProfilePage() {
     isError: isPostsError,
     isPending: isPostsPending,
   } = useQuery({
-    queryFn: (userId: any) => getUserPosts(uId!),
-    queryKey: ["posts", uId, postCount],
+    queryFn: getAllPosts,
+    queryKey: ["posts", postCount],
   });
 
   const posts = [];
   if (postsData) {
     for (const key in postsData) {
-      posts.push(postsData[key]);
+      if (postsData[key].userId === uId) {
+        posts.push({ data: postsData[key], postId: key });
+      }
     }
     posts.reverse();
   }
@@ -49,12 +51,14 @@ export default function ProfilePage() {
         <ul className="post-container">
           {posts.map((post: any) => {
             return (
-              <li key={post.imageName + Math.random()}>
+              <li key={post.data.imageName + Math.random()}>
                 <Post
-                  imageName={post.imageName}
-                  text={post.postText}
-                  userName={post.userName}
-                  userId={post.userId}
+                  imageName={post.data.imageName}
+                  text={post.data.postText}
+                  userName={post.data.userName}
+                  authId={post.data.userId}
+                  likes={post.data.likes}
+                  postId={post.postId}
                 />
               </li>
             );
