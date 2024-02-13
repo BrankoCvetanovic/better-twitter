@@ -277,9 +277,14 @@ a{
   &:hover{
       background: #eef0f1;
   }
+  .actions{
+    padding-top: 7px;
+    display: flex;
+    justify-content: space-between;
+  }
   .like{
     display: flex;
-    padding-top: 7px;
+
     gap:5px;
     align-items: center;
   }
