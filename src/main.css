@@ -5,11 +5,45 @@
   align-items: center;
 }
 
-.control-error {
-  color: #ffca99;
-  font-size: 0.8rem;
-  height: 2rem;
-  padding: 0.5rem 0;
+.pending {
+  display: flex;
+  justify-content: center;
+}
+
+.home {
+  margin: 0 20%;
+  padding: 0 5%;
+  border-left: solid 2px #3AAFA9;
+  border-right: solid 2px #3AAFA9;
+  min-height: 100vh;
+}
+.home h1 {
+  font-size: 1.8rem;
+  padding: 15px 50px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+}
+.home h1.deepshadow {
+  color: #17252A;
+  letter-spacing: 0.05em;
+  text-shadow: 1px 1px 0px #d5d5d5, 2px 2px 0px #3AAFA9;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+@media screen and (max-width: 700px) {
+  .home {
+    margin: 4% 4%;
+    border: none;
+  }
+}
+.profile {
+  margin: 4% 20%;
 }
 
 body {
@@ -18,12 +52,45 @@ body {
   margin: 0;
 }
 
-.header {
-  box-shadow: 1px -1px 10px 4px rgba(0, 0, 0, 0.19);
+.welcome {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../public/5588665.jpg);
+  background-size: cover;
+  box-sizing: border-box;
+  padding: 5% 5%;
+  display: flex;
+  width: 100%;
+  gap: 12%;
+  align-items: center;
+}
+.welcome img {
+  flex-shrink: 10;
+}
+.welcome div {
+  flex-shrink: 1;
+}
+.welcome div h1 {
+  font-size: 3rem;
+}
+.welcome div h2 {
+  font-size: 2rem;
+}
+.welcome .credit {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0.5rem;
+  color: #17252A;
+  font-size: 0.8rem;
 }
 
-#root {
-  width: 100vw;
+.header {
+  width: 100%;
+  box-shadow: 1px -1px 10px 4px rgba(0, 0, 0, 0.19);
 }
 
 .nav {
@@ -88,7 +155,15 @@ body {
   background: #17252A;
 }
 
+@media screen and (max-width: 900px) {
+  .welcome {
+    gap: 0;
+  }
+}
 @media screen and (max-width: 700px) {
+  .welcome {
+    flex-direction: column;
+  }
   .menu-btn {
     visibility: visible;
   }
@@ -122,17 +197,6 @@ body {
     top: 0;
   }
 }
-.layout {
-  padding: 4% 20%;
-}
-
-.home {
-  padding: 5%;
-  border-left: solid 2px #3AAFA9;
-  border-right: solid 2px #3AAFA9;
-  height: 100vh;
-}
-
 .modal {
   border: none;
   width: 400px;
@@ -147,4 +211,110 @@ body {
 
 dialog::backdrop {
   background-color: rgba(157, 158, 155, 0.37);
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.new-post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.new-post-container .close {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+.new-post-container .actions {
+  margin-top: 2rem;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.new-post-container .image-btn {
+  display: flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #1976d2;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+.new-post-container .image-btn:hover {
+  text-decoration: none;
+  background-color: #1565c0;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.new-post {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  background: rgb(247, 243, 243);
+  min-height: 150px;
+  padding: 15px;
+  border-radius: 10px;
+}
+.new-post .text {
+  resize: none;
+  border: none;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 5px;
+  color: rgb(63, 62, 62);
+  max-height: 5lh;
+}
+.new-post .img-container img {
+  max-height: 250px;
+  max-width: 100%;
+}
+.new-post .img-container .remove-img {
+  position: relative;
+  top: 35px;
+  left: 3px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  background: rgb(255, 255, 255);
+  padding: 15px;
+  border: solid rgb(226, 224, 224) 1px;
+}
+.post .title {
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+.post .text {
+  font-size: 0.9rem;
+  padding-bottom: 10px;
+  padding-left: 5px;
+}
+.post img {
+  border-radius: 10px;
+}
+.post:hover {
+  background: #eef0f1;
 }/*# sourceMappingURL=main.css.map */

@@ -1,17 +1,18 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-import { getUserId } from "../util/auth";
+import { getUserId, getUserName } from "../util/auth";
 
-interface AuthState {
-  isOpen: boolean;
-  isLoged: boolean;
-}
-
-const initialAuthState: AuthState = { isOpen: false, isLoged: false };
+const initialAuthState = { isOpen: false, isLoged: false, userName: "" };
 
 const token = getUserId();
 
+const username = getUserName();
+
 if (token) {
   initialAuthState.isLoged = true;
+}
+
+if (username) {
+  initialAuthState.userName = username;
 }
 
 const authSlice = createSlice({
@@ -30,14 +31,42 @@ const authSlice = createSlice({
     toggleIsLoggedOf(state) {
       state.isLoged = false;
     },
+    setUserName(state, actions) {
+      state.userName = actions.payload;
+    },
+  },
+});
+
+const initialNewPostState = {
+  isOpen: false,
+  postsCount: 0,
+};
+
+const newPostSlice = createSlice({
+  name: "newPost",
+  initialState: initialNewPostState,
+  reducers: {
+    toggleFormOn(state) {
+      state.isOpen = true;
+    },
+    toggleFormOff(state) {
+      state.isOpen = false;
+    },
+    updatePostState(state) {
+      state.postsCount += 1;
+    },
   },
 });
 
 const store = configureStore({
-  reducer: { auth: authSlice.reducer },
+  reducer: {
+    auth: authSlice.reducer,
+    newPost: newPostSlice.reducer,
+  },
 });
 
 export const authSliceActions = authSlice.actions;
+export const newPostSliceActions = newPostSlice.actions;
 
 export default store;
 

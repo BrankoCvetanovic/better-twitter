@@ -1,19 +1,16 @@
-import { getUserPosts } from "../util/post";
-import { getUserData } from "../util/auth";
-import { getUserId } from "../util/auth";
 import { useQuery } from "@tanstack/react-query";
-import { CircularProgress } from "@mui/material";
-import { useAppSelector } from "../store/hooks";
+import { useParams } from "react-router-dom";
+import { getUserData } from "../util/auth";
+import { getUserPosts } from "../util/post";
 import Post from "../components/Post";
+import { CircularProgress } from "@mui/material";
 
-export default function ProfilePage() {
-  const postCount = useAppSelector((state) => state.newPost.postsCount);
-
-  const uId = getUserId();
+export default function OtherProfiles() {
+  const params = useParams();
 
   const { data, error, isError, isPending } = useQuery({
-    queryFn: (userId: any) => getUserData(uId!),
-    queryKey: ["account", uId],
+    queryFn: (userId: any) => getUserData(params.userId!),
+    queryKey: ["account", params.userId],
   });
 
   const {
@@ -22,8 +19,8 @@ export default function ProfilePage() {
     isError: isPostsError,
     isPending: isPostsPending,
   } = useQuery({
-    queryFn: (userId: any) => getUserPosts(uId!),
-    queryKey: ["posts", uId, postCount],
+    queryFn: (userId: any) => getUserPosts(params.userId!),
+    queryKey: ["posts", params.userId],
   });
 
   const posts = [];

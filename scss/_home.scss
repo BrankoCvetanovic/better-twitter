@@ -1,0 +1,34 @@
+
+.home{
+    margin:0 20%;
+    padding:0 5%;
+    border-left:solid 2px $primary-color;
+    border-right:solid 2px $primary-color;
+    min-height: 100vh;
+    h1 {
+        font-size: 1.8rem;
+        padding: 15px 50px;
+        text-align: center;
+        text-transform: uppercase;
+        text-rendering: optimizeLegibility;
+        
+        &.deepshadow {
+            color: $secondary-color;
+    letter-spacing: .05em;
+    text-shadow: 
+      1px 1px 0px #d5d5d5, 
+      2px 2px 0px $primary-color;
+        }
+}
+}
+.post-container{
+    display: flex;
+    flex-direction: column;
+    gap:35px;
+}
+@include media-md{
+   .home{
+    margin: 4% 4%;
+    border:none
+   };
+}

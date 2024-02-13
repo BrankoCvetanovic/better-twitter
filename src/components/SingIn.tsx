@@ -1,4 +1,4 @@
-import { useState, FC } from "react";
+import { useState } from "react";
 import { auth } from "../firebase";
 import {
   signInWithEmailAndPassword,
@@ -23,12 +23,19 @@ import {
 } from "../util/validation";
 import { useAppDispatch } from "../store/hooks";
 import { authSliceActions } from "../store";
-import { signUpUser } from "../util/auth";
+import { addUserToDatabase } from "../util/auth";
+import { useRevalidator } from "react-router-dom";
+import { getUserData } from "../util/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const [isSignIn, setIsSignIn] = useState(true);
 
   const dispach = useAppDispatch();
+
+  const revalidator = useRevalidator();
+
+  const navigate = useNavigate();
 
   const {
     inputValue: nameValue,
@@ -73,19 +80,23 @@ export default function SignIn() {
         const id = toast.loading("Please wait...");
         createUserWithEmailAndPassword(auth, emailValue, passValue)
           .then((useCredetial: any) => {
-            const token = useCredetial.user.accessToken;
             const uId = useCredetial.user.uid;
-            localStorage.setItem("token", token);
             localStorage.setItem("userId", uId);
-            signUpUser(uId, nameValue, emailValue);
+            getUserData(uId).then((response: any) => {
+              dispach(authSliceActions.setUserName(response.userName));
+              localStorage.setItem("username", response.username);
+            });
+            addUserToDatabase(uId, nameValue, emailValue);
             toast.update(id, {
               render: "Your account has been created!",
               type: "success",
               isLoading: false,
             });
+            revalidator.revalidate();
             setTimeout(() => {
               dispach(authSliceActions.toggleIsLogedOn());
               dispach(authSliceActions.toggleFormOff());
+              navigate("/home");
             }, 1500);
           })
           .catch((error: any) => {
@@ -110,19 +121,24 @@ export default function SignIn() {
     const id = toast.loading("Please wait...");
     signInWithEmailAndPassword(auth, emailValue, passValue)
       .then((useCredetial: any) => {
-        const token = useCredetial.user.accessToken;
         const uId = useCredetial.user.uid;
-        localStorage.setItem("token", token);
         localStorage.setItem("userId", uId);
+        getUserData(uId).then((response: any) => {
+          dispach(authSliceActions.setUserName(response.username));
+          localStorage.setItem("username", response.username);
+        });
+
         toast.update(id, {
           render: "LOGIN SUCCESSFUL",
           type: "success",
           isLoading: false,
         });
+        revalidator.revalidate();
         setTimeout(() => {
           dispach(authSliceActions.toggleIsLogedOn());
           dispach(authSliceActions.toggleFormOff());
-        }, 1500);
+          navigate("/home");
+        }, 1100);
       })
       .catch((error: any) => {
         let errorMess = "Something went wrong";
@@ -135,6 +151,7 @@ export default function SignIn() {
           render: errorMess,
           type: "error",
           isLoading: false,
+          autoClose: 4000,
         });
       });
   };
