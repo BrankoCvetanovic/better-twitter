@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./Pages/Root";
+import WelcomePage from "./Pages/Welcome";
 import HomePage from "./Pages/Home";
 import ProfilePage from "./Pages/Profile";
 import ErrorPage from "./Pages/Error";
@@ -16,7 +17,8 @@ const router = createBrowserRouter([
     id: "root",
     loader: loader,
     children: [
-      { path: "", element: <HomePage /> },
+      { path: "", element: <WelcomePage /> },
+      { path: "/home", loader: checkAuthLoader, element: <HomePage /> },
       { path: "/profile", loader: checkAuthLoader, element: <ProfilePage /> },
       { path: "/profiles/:userId", element: <OtherProfiles /> },
     ],

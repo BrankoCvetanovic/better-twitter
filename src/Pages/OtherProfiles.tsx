@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getUserData } from "../util/auth";
 import { getUserPosts } from "../util/post";
 import Post from "../components/Post";
+import { CircularProgress } from "@mui/material";
 
 export default function OtherProfiles() {
   const params = useParams();
@@ -14,9 +15,9 @@ export default function OtherProfiles() {
 
   const {
     data: postsData,
-    error: errorP,
-    isError: sd,
-    isPending: aw,
+    error: postsError,
+    isError: isPostsError,
+    isPending: isPostsPending,
   } = useQuery({
     queryFn: (userId: any) => getUserPosts(params.userId!),
     queryKey: ["posts", params.userId],
@@ -31,8 +32,16 @@ export default function OtherProfiles() {
   }
 
   return (
-    <div>
-      {data && <div> {data.username} </div>}
+    <div className="profile">
+      {isPending && <CircularProgress />}
+      {isError && <h2>{error.message}</h2>}
+      {data && <h1>{data.username}</h1>}
+      {isPostsPending && (
+        <div className="pending">
+          <CircularProgress size="4rem" />
+        </div>
+      )}
+      {isPostsError && <p>{postsError.message}</p>}
       {posts && (
         <ul className="post-container">
           {posts.map((post: any) => {

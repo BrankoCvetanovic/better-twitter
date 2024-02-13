@@ -2,6 +2,7 @@ import { useAppSelector } from "../store/hooks";
 import { useQuery } from "@tanstack/react-query";
 import Post from "../components/Post";
 import { getAllPosts } from "../util/post";
+import { CircularProgress } from "@mui/material";
 
 export default function HomePage() {
   const postCount = useAppSelector((state) => state.newPost.postsCount);
@@ -22,9 +23,15 @@ export default function HomePage() {
 
   return (
     <div className="home">
-      <h1>Home Page</h1>
+      <h1 className="deepshadow">what's new ?!</h1>
+      {isError && <p>{error.message}</p>}
       {isLoged && (
         <ul className="post-container">
+          {isPending && (
+            <li className="pending">
+              <CircularProgress size="4rem" />
+            </li>
+          )}
           {posts.map((post: any) => {
             return (
               <li key={post.imageName + Math.random()}>

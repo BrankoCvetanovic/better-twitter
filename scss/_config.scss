@@ -6,4 +6,8 @@ $mobile: 600px;
         @content;
 }
 }
-  
+@mixin media-mmd {
+    @media screen and (max-width: 900px) {
+        @content;
+}
+}

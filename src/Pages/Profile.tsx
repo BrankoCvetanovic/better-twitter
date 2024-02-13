@@ -18,9 +18,9 @@ export default function ProfilePage() {
 
   const {
     data: postsData,
-    error: errorP,
-    isError: sd,
-    isPending: aw,
+    error: postsError,
+    isError: isPostsError,
+    isPending: isPostsPending,
   } = useQuery({
     queryFn: (userId: any) => getUserPosts(uId!),
     queryKey: ["posts", uId, postCount],
@@ -35,11 +35,16 @@ export default function ProfilePage() {
   }
 
   return (
-    <>
-      <h1>Profile Page</h1>
+    <div className="profile">
       {isPending && <CircularProgress />}
-      {isError && <p>{error.message}</p>}
-      {data && <p>{data.username}</p>}
+      {isError && <h2>{error.message}</h2>}
+      {data && <h1>{data.username}</h1>}
+      {isPostsPending && (
+        <div className="pending">
+          <CircularProgress size="4rem" />
+        </div>
+      )}
+      {isPostsError && <p>{postsError.message}</p>}
       {posts && (
         <ul className="post-container">
           {posts.map((post: any) => {
@@ -56,6 +61,6 @@ export default function ProfilePage() {
           })}
         </ul>
       )}
-    </>
+    </div>
   );
 }

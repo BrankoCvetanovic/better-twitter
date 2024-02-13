@@ -26,6 +26,7 @@ import { authSliceActions } from "../store";
 import { addUserToDatabase } from "../util/auth";
 import { useRevalidator } from "react-router-dom";
 import { getUserData } from "../util/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -33,6 +34,8 @@ export default function SignIn() {
   const dispach = useAppDispatch();
 
   const revalidator = useRevalidator();
+
+  const navigate = useNavigate();
 
   const {
     inputValue: nameValue,
@@ -81,6 +84,7 @@ export default function SignIn() {
             localStorage.setItem("userId", uId);
             getUserData(uId).then((response: any) => {
               dispach(authSliceActions.setUserName(response.userName));
+              localStorage.setItem("username", response.username);
             });
             addUserToDatabase(uId, nameValue, emailValue);
             toast.update(id, {
@@ -92,6 +96,7 @@ export default function SignIn() {
             setTimeout(() => {
               dispach(authSliceActions.toggleIsLogedOn());
               dispach(authSliceActions.toggleFormOff());
+              navigate("/home");
             }, 1500);
           })
           .catch((error: any) => {
@@ -120,6 +125,7 @@ export default function SignIn() {
         localStorage.setItem("userId", uId);
         getUserData(uId).then((response: any) => {
           dispach(authSliceActions.setUserName(response.username));
+          localStorage.setItem("username", response.username);
         });
 
         toast.update(id, {
@@ -131,6 +137,7 @@ export default function SignIn() {
         setTimeout(() => {
           dispach(authSliceActions.toggleIsLogedOn());
           dispach(authSliceActions.toggleFormOff());
+          navigate("/home");
         }, 1100);
       })
       .catch((error: any) => {

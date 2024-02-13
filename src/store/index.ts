@@ -1,12 +1,18 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-import { getUserId } from "../util/auth";
+import { getUserId, getUserName } from "../util/auth";
 
 const initialAuthState = { isOpen: false, isLoged: false, userName: "" };
 
 const token = getUserId();
 
+const username = getUserName();
+
 if (token) {
   initialAuthState.isLoged = true;
+}
+
+if (username) {
+  initialAuthState.userName = username;
 }
 
 const authSlice = createSlice({

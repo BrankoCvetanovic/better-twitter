@@ -20,6 +20,10 @@ const Post: FC<{
   if (imageName !== "") {
     imageIndex = imageData!.findIndex((url: string) => url.includes(imageName));
   }
+  let isError = false;
+  if (imageName !== "" && imageIndex === -1) {
+    isError = true;
+  }
 
   return (
     <div className="post">
@@ -27,6 +31,7 @@ const Post: FC<{
         {userName}
       </NavLink>
       <div className="text"> {text}</div>
+      {isError && <p>An error occurred while fetching images.</p>}
       {imageName && <img src={imageData[imageIndex]} alt="" />}
     </div>
   );

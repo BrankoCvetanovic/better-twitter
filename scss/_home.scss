@@ -1,36 +1,25 @@
-.post{
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    background: rgb(255, 255, 255);
-    min-height: 150px;
-    padding: 15px;
-    border: solid rgb(226, 224, 224) 1px;
-    .title{
-        font-weight: 700;
-        padding-bottom: 10px;
-    }
-    .text{
-        font-size: 0.9rem;
-        padding-bottom: 10px;
-        padding-left: 5px;
-    }
-    img{
-        border-radius: 10px;
-    }
-    &:hover{
-        background: #e7ebee;
-    }
-  }
-  
-.layout{
-    padding:4% 20%;
-}
+
 .home{
-    padding: 5%;
+    margin:0 20%;
+    padding:0 5%;
     border-left:solid 2px $primary-color;
     border-right:solid 2px $primary-color;
     min-height: 100vh;
+    h1 {
+        font-size: 1.8rem;
+        padding: 15px 50px;
+        text-align: center;
+        text-transform: uppercase;
+        text-rendering: optimizeLegibility;
+        
+        &.deepshadow {
+            color: $secondary-color;
+    letter-spacing: .05em;
+    text-shadow: 
+      1px 1px 0px #d5d5d5, 
+      2px 2px 0px $primary-color;
+        }
+}
 }
 .post-container{
     display: flex;
@@ -38,8 +27,8 @@
     gap:35px;
 }
 @include media-md{
-   .layout{ padding:4% 4%} 
    .home{
+    margin: 4% 4%;
     border:none
    };
 }

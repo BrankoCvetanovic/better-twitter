@@ -1,6 +1,7 @@
 @import "config";
 @import "error";
 @import "home";
+@import "profile";
 
 @mixin transition-ease {
     transition: all 0.5s ease-in-out;
@@ -10,12 +11,45 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
 }
+.welcome{
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../public/5588665.jpg);
+  background-size: cover;
+  box-sizing: border-box;
+  padding: 5% 5%;
+  display: flex;
+  width: 100%;
+  gap: 12% ;
+  align-items: center;
+  img{
+    flex-shrink: 10;
+  }
+  div{
+    flex-shrink: 1;
+    h1{
+      font-size: 3rem;
+    }
+    h2{
+      font-size: 2rem;
+    }
+  }
+  .credit{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0.5rem;
+    color: $secondary-color;
+    font-size: 0.8rem;
+  }
+}
 .header{
+  width: 100%;
   -webkit-box-shadow: 0px -1px 10px 4px rgba(0,0,0,0.19); 
   box-shadow: 1px -1px 10px 4px rgba(0,0,0,0.19);
-}
-#root{
-  width: 100vw;
 }
 .nav{
     visibility: visible;
@@ -82,7 +116,15 @@ body {
   
     }
   }
+  @include media-mmd{
+    .welcome{
+      gap:0;
+    }
+  }
   @include media-md{
+    .welcome{
+      flex-direction: column;
+    }
     .menu-btn{
       visibility: visible;
     }
@@ -183,7 +225,6 @@ dialog::backdrop {
     resize: none;
     border: none;
     background: transparent;
-    overflow: auto;
     outline: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -192,6 +233,7 @@ dialog::backdrop {
     font-size: inherit;
     padding: 5px;
     color: rgb(63, 62, 62);
+    max-height: 5lh;
   }
   .img-container{
     img{
@@ -212,4 +254,27 @@ ul{
 a{
   text-decoration: none;
   color:inherit
+}
+.post{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  background: rgb(255, 255, 255);
+  padding: 15px;
+  border: solid rgb(226, 224, 224) 1px;
+  .title{
+      font-weight: 700;
+      padding-bottom: 10px;
+  }
+  .text{
+      font-size: 0.9rem;
+      padding-bottom: 10px;
+      padding-left: 5px;
+  }
+  img{
+      border-radius: 10px;
+  }
+  &:hover{
+      background: #eef0f1;
+  }
 }

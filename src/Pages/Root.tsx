@@ -1,14 +1,16 @@
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
 import { useEffect } from "react";
 import { clearAuthTokens, getUserId } from "../util/auth";
-import { useAppDispatch } from "../store/hooks";
-import { authSliceActions, newPostSliceActions } from "../store";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { authSliceActions } from "../store";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../firebase";
 
 export default function RootLayout() {
   const dispach = useAppDispatch();
+
+  const isLoged = useAppSelector((state) => state.auth.isLoged);
 
   useEffect(() => {
     const uid = getUserId();
@@ -24,10 +26,8 @@ export default function RootLayout() {
 
   return (
     <div className="root">
-      <Header />
-      <div className="layout">
-        <Outlet />
-      </div>
+      {isLoged && <Header />}
+      <Outlet />
     </div>
   );
 }

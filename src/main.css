@@ -5,47 +5,29 @@
   align-items: center;
 }
 
-.control-error {
-  color: #ffca99;
-  font-size: 0.8rem;
-  height: 2rem;
-  padding: 0.5rem 0;
-}
-
-.post {
+.pending {
   display: flex;
-  flex-direction: column;
-  width: 90%;
-  background: rgb(255, 255, 255);
-  min-height: 150px;
-  padding: 15px;
-  border: solid rgb(226, 224, 224) 1px;
-}
-.post .title {
-  font-weight: 700;
-  padding-bottom: 10px;
-}
-.post .text {
-  font-size: 0.9rem;
-  padding-bottom: 10px;
-  padding-left: 5px;
-}
-.post img {
-  border-radius: 10px;
-}
-.post:hover {
-  background: #e7ebee;
-}
-
-.layout {
-  padding: 4% 20%;
+  justify-content: center;
 }
 
 .home {
-  padding: 5%;
+  margin: 0 20%;
+  padding: 0 5%;
   border-left: solid 2px #3AAFA9;
   border-right: solid 2px #3AAFA9;
   min-height: 100vh;
+}
+.home h1 {
+  font-size: 1.8rem;
+  padding: 15px 50px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+}
+.home h1.deepshadow {
+  color: #17252A;
+  letter-spacing: 0.05em;
+  text-shadow: 1px 1px 0px #d5d5d5, 2px 2px 0px #3AAFA9;
 }
 
 .post-container {
@@ -55,25 +37,60 @@
 }
 
 @media screen and (max-width: 700px) {
-  .layout {
-    padding: 4% 4%;
-  }
   .home {
+    margin: 4% 4%;
     border: none;
   }
 }
+.profile {
+  margin: 4% 20%;
+}
+
 body {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
   margin: 0;
 }
 
-.header {
-  box-shadow: 1px -1px 10px 4px rgba(0, 0, 0, 0.19);
+.welcome {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../public/5588665.jpg);
+  background-size: cover;
+  box-sizing: border-box;
+  padding: 5% 5%;
+  display: flex;
+  width: 100%;
+  gap: 12%;
+  align-items: center;
+}
+.welcome img {
+  flex-shrink: 10;
+}
+.welcome div {
+  flex-shrink: 1;
+}
+.welcome div h1 {
+  font-size: 3rem;
+}
+.welcome div h2 {
+  font-size: 2rem;
+}
+.welcome .credit {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0.5rem;
+  color: #17252A;
+  font-size: 0.8rem;
 }
 
-#root {
-  width: 100vw;
+.header {
+  width: 100%;
+  box-shadow: 1px -1px 10px 4px rgba(0, 0, 0, 0.19);
 }
 
 .nav {
@@ -138,7 +155,15 @@ body {
   background: #17252A;
 }
 
+@media screen and (max-width: 900px) {
+  .welcome {
+    gap: 0;
+  }
+}
 @media screen and (max-width: 700px) {
+  .welcome {
+    flex-direction: column;
+  }
   .menu-btn {
     visibility: visible;
   }
@@ -243,13 +268,13 @@ dialog::backdrop {
   resize: none;
   border: none;
   background: transparent;
-  overflow: auto;
   outline: none;
   box-shadow: none;
   font-family: inherit;
   font-size: inherit;
   padding: 5px;
   color: rgb(63, 62, 62);
+  max-height: 5lh;
 }
 .new-post .img-container img {
   max-height: 250px;
@@ -268,4 +293,28 @@ ul {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  background: rgb(255, 255, 255);
+  padding: 15px;
+  border: solid rgb(226, 224, 224) 1px;
+}
+.post .title {
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+.post .text {
+  font-size: 0.9rem;
+  padding-bottom: 10px;
+  padding-left: 5px;
+}
+.post img {
+  border-radius: 10px;
+}
+.post:hover {
+  background: #eef0f1;
 }/*# sourceMappingURL=main.css.map */

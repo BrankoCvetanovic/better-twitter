@@ -16,7 +16,6 @@ export default function () {
   const postText = useRef<HTMLTextAreaElement>(null);
 
   const userName = useAppSelector((state) => state.auth.userName);
-  console.log(userName);
 
   const revalidator = useRevalidator();
 
@@ -100,6 +99,7 @@ export default function () {
             ref={postText}
             className="text"
             placeholder="What's going on?"
+            maxLength={140}
           />
           {newImage && (
             <div className="img-container">

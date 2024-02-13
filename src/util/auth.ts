@@ -6,6 +6,10 @@ export function getUserId() {
   return userId;
 }
 
+export function getUserName() {
+  return localStorage.getItem("username");
+}
+
 export function checkAuthLoader() {
   const userId = getUserId();
 
@@ -16,8 +20,8 @@ export function checkAuthLoader() {
   }
 }
 export function clearAuthTokens() {
-  localStorage.removeItem("token");
   localStorage.removeItem("userId");
+  localStorage.removeItem("username");
 }
 
 export function addUserToDatabase(userId: string, name: string, email: string) {
@@ -34,10 +38,10 @@ export function getUserData(userId: string) {
       if (snapshot.exists()) {
         return snapshot.val();
       } else {
-        throw new Error("There is no available data at the moment.");
+        throw new Error("Could not find users data.");
       }
     })
     .catch((error) => {
-      throw new Error("There is no available data at the moment.");
+      throw new Error("Could not find users data.");
     });
 }
