@@ -1,3 +1,27 @@
 .profile{
     margin: 4% 20%;
+    .user{
+        margin-bottom: 10vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        h1{
+            font-size: 2rem;
+        }
+        div{
+            font-size: 0.85rem;
+        }
+    }
+
+    .posts{
+        text-align: center;
+        font-weight: 500;
+        text-decoration: underline;
+
+    }
 }
+@include media-md{
+    .profile{
+     margin: 4% 4%;
+    };
+ }

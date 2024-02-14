@@ -43,6 +43,7 @@ export default function HomePage() {
                   likes={post.data.likes}
                   postId={post.postId}
                   myProfile={false}
+                  isRetweet={post.data.isRetweet}
                 />
               </li>
             );

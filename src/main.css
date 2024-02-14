@@ -45,7 +45,29 @@
 .profile {
   margin: 4% 20%;
 }
+.profile .user {
+  margin-bottom: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.profile .user h1 {
+  font-size: 2rem;
+}
+.profile .user div {
+  font-size: 0.85rem;
+}
+.profile .posts {
+  text-align: center;
+  font-weight: 500;
+  text-decoration: underline;
+}
 
+@media screen and (max-width: 700px) {
+  .profile {
+    margin: 4% 4%;
+  }
+}
 body {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
@@ -332,6 +354,12 @@ a {
   display: flex;
   gap: 5px;
   align-items: center;
+}
+.post .retweet {
+  font-size: 0.8rem;
+  color: rgb(97, 95, 95);
+  margin-top: -8px;
+  margin-bottom: 8px;
 }
 
 .delete-modal {

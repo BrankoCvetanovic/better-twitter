@@ -23,6 +23,12 @@ export default function OtherProfiles() {
     queryKey: ["posts"],
   });
 
+  let joiningDate = "";
+
+  if (data) {
+    joiningDate = data.date.slice(5, 16);
+  }
+
   const posts = [];
   if (postsData) {
     for (const key in postsData) {
@@ -37,13 +43,18 @@ export default function OtherProfiles() {
     <div className="profile">
       {isPending && <CircularProgress />}
       {isError && <h2>{error.message}</h2>}
-      {data && <h1>{data.username}</h1>}
+      {data && (
+        <div className="user">
+          <h1>{data.username}</h1> <div>{joiningDate}</div>
+        </div>
+      )}
       {isPostsPending && (
         <div className="pending">
           <CircularProgress size="4rem" />
         </div>
       )}
       {isPostsError && <p>{postsError.message}</p>}
+      <div className="posts">POSTS</div>
       {posts && (
         <ul className="post-container">
           {posts.map((post: any) => {
@@ -57,6 +68,7 @@ export default function OtherProfiles() {
                   likes={post.data.likes}
                   postId={post.postId}
                   myProfile={false}
+                  isRetweet={post.data.isRetweet}
                 />
               </li>
             );

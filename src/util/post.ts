@@ -4,6 +4,7 @@ import {
   uploadBytes,
   listAll,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
 import { storage } from "../firebase";
 
@@ -14,7 +15,8 @@ export async function uploadPost(
   userId: string,
   postText: string | null,
   imageName: string | null,
-  userName: string
+  userName: string,
+  isRetweet: boolean
 ) {
   let isTextError = false;
 
@@ -28,6 +30,7 @@ export async function uploadPost(
     likes: {
       initil: "initil",
     },
+    isRetweet,
   }).catch(() => {
     isTextError = true;
   });
@@ -101,12 +104,15 @@ export async function deletePost(postId: string) {
       throw new Error("There is no available data at the moment.");
     });
   if (allPosts.hasOwnProperty(postId)) {
-    console.log(allPosts);
-    console.log(postId);
     allPosts[postId] = null;
   }
   const allPostRef = ref(database, "users/allposts");
   set(allPostRef, allPosts);
+}
+
+export function deleteImage(imageName: string) {
+  const desertRef = refStorage(storage, `images/${imageName}`);
+  deleteObject(desertRef);
 }
 
 export function getAllPosts() {

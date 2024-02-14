@@ -16,6 +16,12 @@ export default function ProfilePage() {
     queryKey: ["account", uId],
   });
 
+  let joiningDate = "";
+
+  if (data) {
+    joiningDate = data.date.slice(5, 16);
+  }
+
   const {
     data: postsData,
     error: postsError,
@@ -40,13 +46,24 @@ export default function ProfilePage() {
     <div className="profile">
       {isPending && <CircularProgress />}
       {isError && <h2>{error.message}</h2>}
-      {data && <h1>{data.username}</h1>}
+      {data && (
+        <div className="user">
+          <h1>{data.username}</h1> <div>{joiningDate}</div>
+        </div>
+      )}
       {isPostsPending && (
         <div className="pending">
           <CircularProgress size="4rem" />
         </div>
       )}
       {isPostsError && <p>{postsError.message}</p>}
+      {(posts && posts.length === 0) || <div className="posts">POSTS</div>}
+      {posts && posts.length === 0 && (
+        <div>
+          <div>Let us begain!</div>
+          <div>Upload your first post today!</div>
+        </div>
+      )}
       {posts && (
         <ul className="post-container">
           {posts.map((post: any) => {
@@ -60,6 +77,7 @@ export default function ProfilePage() {
                   likes={post.data.likes}
                   postId={post.postId}
                   myProfile={true}
+                  isRetweet={post.data.isRetweet}
                 />
               </li>
             );

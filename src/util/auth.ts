@@ -24,11 +24,17 @@ export function clearAuthTokens() {
   localStorage.removeItem("username");
 }
 
-export function addUserToDatabase(userId: string, name: string, email: string) {
+export function addUserToDatabase(
+  userId: string,
+  name: string,
+  email: string,
+  date: string
+) {
   const database = getDatabase();
   set(ref(database, "users/accounts/" + userId), {
     username: name,
     email: email,
+    date,
   });
 }
 export function getUserData(userId: string) {

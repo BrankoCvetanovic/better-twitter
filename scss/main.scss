@@ -294,6 +294,12 @@ a{
     gap:5px;
     align-items: center;
   }
+  .retweet{
+    font-size: 0.8rem;
+    color:rgb(97, 95, 95);
+    margin-top: -8px;
+    margin-bottom: 8px;
+  }
 }
 .delete-modal{
   border: none;
@@ -307,4 +313,5 @@ a{
     justify-content: flex-end;
     gap: 20px;
   }
+
 }

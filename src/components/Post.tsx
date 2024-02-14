@@ -2,7 +2,13 @@ import { FC, useEffect, useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { getUserId, getUserName } from "../util/auth";
-import { addLike, deletePost, removeLike, uploadPost } from "../util/post";
+import {
+  addLike,
+  deleteImage,
+  deletePost,
+  removeLike,
+  uploadPost,
+} from "../util/post";
 import { IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -23,7 +29,17 @@ const Post: FC<{
   likes: {
     [key: string]: string;
   };
-}> = ({ text, imageName, userName, authId, postId, likes, myProfile }) => {
+  isRetweet: boolean;
+}> = ({
+  text,
+  imageName,
+  userName,
+  authId,
+  postId,
+  likes,
+  myProfile,
+  isRetweet,
+}) => {
   const [imageData, setImageData] = useState<string[]>([]);
   const [likesCount, setLikeCount] = useState(Object.keys(likes).length - 1);
   const [isLiked, setIsLiked] = useState(false);
@@ -34,7 +50,10 @@ const Post: FC<{
   const dispach = useAppDispatch();
 
   useEffect(() => {
-    setImageData(loaderData);
+    setTimeout(() => {
+      setImageData(loaderData);
+    }, 100);
+
     if (likes.hasOwnProperty(currentUserId!)) {
       setIsLiked(true);
     }
@@ -68,7 +87,8 @@ const Post: FC<{
       currentUserId!,
       retweetText,
       imageName,
-      currentUsername!
+      currentUsername!,
+      true
     );
     if (isTextError) {
       toast.update(toastId, {
@@ -91,7 +111,6 @@ const Post: FC<{
   }
 
   function handleStartDeletion() {
-    console.log(postId);
     setIsDeleteOpen(true);
   }
 
@@ -101,6 +120,10 @@ const Post: FC<{
 
   function handleDelete() {
     deletePost(postId);
+    if (!isRetweet) {
+      deleteImage(imageName);
+    }
+
     setTimeout(() => {
       dispach(newPostSliceActions.updatePostState());
     }, 1000);
@@ -108,6 +131,7 @@ const Post: FC<{
 
   return (
     <div className="post">
+      {isRetweet && <div className="retweet">Retweet</div>}
       <ToastContainer position="top-center" hideProgressBar />
       <div className="top-actions">
         <NavLink className={"title"} to={`/profiles/${authId}`}>
