@@ -56,6 +56,7 @@ export default function OtherProfiles() {
                   authId={post.data.userId}
                   likes={post.data.likes}
                   postId={post.postId}
+                  myProfile={false}
                 />
               </li>
             );

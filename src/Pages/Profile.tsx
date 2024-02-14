@@ -59,6 +59,7 @@ export default function ProfilePage() {
                   authId={post.data.userId}
                   likes={post.data.likes}
                   postId={post.postId}
+                  myProfile={true}
                 />
               </li>
             );

@@ -262,9 +262,15 @@ a{
   background: rgb(255, 255, 255);
   padding: 15px;
   border: solid rgb(226, 224, 224) 1px;
+  .top-actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+  }
   .title{
       font-weight: 700;
-      padding-bottom: 10px;
+
   }
   .text{
       font-size: 0.9rem;
@@ -275,7 +281,7 @@ a{
       border-radius: 10px;
   }
   &:hover{
-      background: #eef0f1;
+      background: #f4f6f7;
   }
   .actions{
     padding-top: 7px;
@@ -287,5 +293,18 @@ a{
 
     gap:5px;
     align-items: center;
+  }
+}
+.delete-modal{
+  border: none;
+  padding: 20px;
+  .text{
+    padding-bottom: 30px;
+    font-size: 1.1rem;
+  }
+  .actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
   }
 }

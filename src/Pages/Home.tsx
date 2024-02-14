@@ -42,6 +42,7 @@ export default function HomePage() {
                   authId={post.data.userId}
                   likes={post.data.likes}
                   postId={post.postId}
+                  myProfile={false}
                 />
               </li>
             );

@@ -2,14 +2,16 @@ import { FC, useEffect, useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { getUserId, getUserName } from "../util/auth";
-import { addLike, removeLike, uploadPost } from "../util/post";
+import { addLike, deletePost, removeLike, uploadPost } from "../util/post";
 import { IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import IosShareIcon from "@mui/icons-material/IosShare";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { ToastContainer, toast } from "react-toastify";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { newPostSliceActions } from "../store";
+import DeleteModul from "./DeleteModal";
 
 const Post: FC<{
   text: string;
@@ -17,13 +19,15 @@ const Post: FC<{
   userName: string;
   authId: string;
   postId: string;
+  myProfile: boolean;
   likes: {
     [key: string]: string;
   };
-}> = ({ text, imageName, userName, authId, postId, likes }) => {
+}> = ({ text, imageName, userName, authId, postId, likes, myProfile }) => {
   const [imageData, setImageData] = useState<string[]>([]);
   const [likesCount, setLikeCount] = useState(Object.keys(likes).length - 1);
   const [isLiked, setIsLiked] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const loaderData = useRouteLoaderData("root") as string[];
 
@@ -39,10 +43,6 @@ const Post: FC<{
   let imageIndex = -1;
   if (imageName !== "") {
     imageIndex = imageData!.findIndex((url: string) => url.includes(imageName));
-  }
-  let isError = false;
-  if (imageName !== "" && imageIndex === -1) {
-    isError = true;
   }
 
   const currentUserId = getUserId();
@@ -90,12 +90,35 @@ const Post: FC<{
     }, 1000);
   }
 
+  function handleStartDeletion() {
+    console.log(postId);
+    setIsDeleteOpen(true);
+  }
+
+  function handleCloseDeleteModal() {
+    setIsDeleteOpen(false);
+  }
+
+  function handleDelete() {
+    deletePost(postId);
+    setTimeout(() => {
+      dispach(newPostSliceActions.updatePostState());
+    }, 1000);
+  }
+
   return (
     <div className="post">
       <ToastContainer position="top-center" hideProgressBar />
-      <NavLink className={"title"} to={`/profiles/${authId}`}>
-        {userName}
-      </NavLink>
+      <div className="top-actions">
+        <NavLink className={"title"} to={`/profiles/${authId}`}>
+          {userName}
+        </NavLink>
+        {myProfile && (
+          <IconButton onClick={handleStartDeletion}>
+            <DeleteOutlinedIcon fontSize="small" />
+          </IconButton>
+        )}
+      </div>
       <div className="text"> {text}</div>
       {imageName && <img src={imageData[imageIndex]} alt="" />}
       <div className="actions">
@@ -116,6 +139,12 @@ const Post: FC<{
           <IosShareIcon />
         </IconButton>
       </div>
+      {isDeleteOpen && (
+        <DeleteModul
+          handleClose={handleCloseDeleteModal}
+          handleRemove={handleDelete}
+        />
+      )}
     </div>
   );
 };

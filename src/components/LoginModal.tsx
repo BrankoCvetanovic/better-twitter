@@ -1,4 +1,4 @@
-import { useEffect, useRef, FC } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useAppDispatch } from "../store/hooks";
 import { authSliceActions } from "../store";
