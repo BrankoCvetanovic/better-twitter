@@ -48,14 +48,16 @@ export default function () {
     const toastId = toast.loading("Please wait...");
     let imageName = "";
     if (newImage) {
-      imageName = Date.now().toString();
+      imageName =
+        Date.now().toString() + Math.random().toString(36).slice(2, 16);
     }
     const uId = getUserId();
     const isTextError = await uploadPost(
       uId!,
       postText.current?.value!,
       imageName,
-      userName
+      userName,
+      false
     );
     let isImageError = false;
     if (newImage) {

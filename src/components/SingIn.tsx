@@ -82,11 +82,14 @@ export default function SignIn() {
           .then((useCredetial: any) => {
             const uId = useCredetial.user.uid;
             localStorage.setItem("userId", uId);
-            getUserData(uId).then((response: any) => {
-              dispach(authSliceActions.setUserName(response.userName));
-              localStorage.setItem("username", response.username);
-            });
-            addUserToDatabase(uId, nameValue, emailValue);
+            dispach(authSliceActions.setUserName(nameValue));
+            localStorage.setItem("username", nameValue);
+            addUserToDatabase(
+              uId,
+              nameValue,
+              emailValue,
+              useCredetial.user.metadata.creationTime
+            );
             toast.update(id, {
               render: "Your account has been created!",
               type: "success",

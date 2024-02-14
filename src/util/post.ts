@@ -4,17 +4,22 @@ import {
   uploadBytes,
   listAll,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
 import { storage } from "../firebase";
+
+const database = getDatabase();
+const dbRef = ref(getDatabase());
 
 export async function uploadPost(
   userId: string,
   postText: string | null,
   imageName: string | null,
-  userName: string
+  userName: string,
+  isRetweet: boolean
 ) {
   let isTextError = false;
-  const database = getDatabase();
+
   const allPostRef = ref(database, "users/allposts");
   const newAllPostRef = push(allPostRef);
   await set(newAllPostRef, {
@@ -25,6 +30,7 @@ export async function uploadPost(
     likes: {
       initil: "initil",
     },
+    isRetweet,
   }).catch(() => {
     isTextError = true;
   });
@@ -42,7 +48,6 @@ export async function uploadImage(image: File, imageName: string) {
 }
 
 export async function addLike(postId: string, userId: string) {
-  const dbRef = ref(getDatabase());
   const postLikes = await get(child(dbRef, `users/allposts/${postId}/likes`))
     .then((snapshot) => {
       if (snapshot.exists()) {
@@ -60,13 +65,11 @@ export async function addLike(postId: string, userId: string) {
   if (!postLikes.hasOwnProperty(userId)) {
     postLikes[userId] = userId;
   }
-  const database = getDatabase();
   const allPostRef = ref(database, `users/allposts/${postId}/likes`);
   set(allPostRef, postLikes);
 }
 
 export async function removeLike(postId: string, userId: string) {
-  const dbRef = ref(getDatabase());
   const postLikes = await get(child(dbRef, `users/allposts/${postId}/likes`))
     .then((snapshot) => {
       if (snapshot.exists()) {
@@ -84,13 +87,35 @@ export async function removeLike(postId: string, userId: string) {
   if (postLikes.hasOwnProperty(userId)) {
     postLikes[userId] = null;
   }
-  const database = getDatabase();
   const allPostRef = ref(database, `users/allposts/${postId}/likes`);
   set(allPostRef, postLikes);
 }
 
+export async function deletePost(postId: string) {
+  const allPosts = await get(child(dbRef, "users/allposts/"))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        throw new Error("There is no available data at the moment.");
+      }
+    })
+    .catch((error) => {
+      throw new Error("There is no available data at the moment.");
+    });
+  if (allPosts.hasOwnProperty(postId)) {
+    allPosts[postId] = null;
+  }
+  const allPostRef = ref(database, "users/allposts");
+  set(allPostRef, allPosts);
+}
+
+export function deleteImage(imageName: string) {
+  const desertRef = refStorage(storage, `images/${imageName}`);
+  deleteObject(desertRef);
+}
+
 export function getAllPosts() {
-  const dbRef = ref(getDatabase());
   return get(child(dbRef, "users/allposts/"))
     .then((snapshot) => {
       if (snapshot.exists()) {

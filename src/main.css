@@ -45,7 +45,29 @@
 .profile {
   margin: 4% 20%;
 }
+.profile .user {
+  margin-bottom: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.profile .user h1 {
+  font-size: 2rem;
+}
+.profile .user div {
+  font-size: 0.85rem;
+}
+.profile .posts {
+  text-align: center;
+  font-weight: 500;
+  text-decoration: underline;
+}
 
+@media screen and (max-width: 700px) {
+  .profile {
+    margin: 4% 4%;
+  }
+}
 body {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
@@ -303,9 +325,14 @@ a {
   padding: 15px;
   border: solid rgb(226, 224, 224) 1px;
 }
+.post .top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
 .post .title {
   font-weight: 700;
-  padding-bottom: 10px;
 }
 .post .text {
   font-size: 0.9rem;
@@ -316,11 +343,35 @@ a {
   border-radius: 10px;
 }
 .post:hover {
-  background: #eef0f1;
+  background: #f4f6f7;
+}
+.post .actions {
+  padding-top: 7px;
+  display: flex;
+  justify-content: space-between;
 }
 .post .like {
   display: flex;
-  padding-top: 7px;
   gap: 5px;
   align-items: center;
+}
+.post .retweet {
+  font-size: 0.8rem;
+  color: rgb(97, 95, 95);
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+.delete-modal {
+  border: none;
+  padding: 20px;
+}
+.delete-modal .text {
+  padding-bottom: 30px;
+  font-size: 1.1rem;
+}
+.delete-modal .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
 }/*# sourceMappingURL=main.css.map */
