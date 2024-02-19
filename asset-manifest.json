@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.947d530d.css",
-    "main.js": "/static/js/main.dc55672c.js",
-    "static/media/5588665.jpg": "/static/media/5588665.8d7160ed6120326563c9.jpg",
-    "static/media/logo.png": "/static/media/logo.8c20dfa00a83b757d50e.png",
-    "static/media/logo-bg.png": "/static/media/logo-bg.3974e19492ef3a96e379.png",
-    "index.html": "/index.html",
-    "main.947d530d.css.map": "/static/css/main.947d530d.css.map",
-    "main.dc55672c.js.map": "/static/js/main.dc55672c.js.map"
+    "main.css": "/bettertwitter/static/css/main.33c1544a.css",
+    "main.js": "/bettertwitter/static/js/main.326be0be.js",
+    "static/media/5588665.jpg": "/bettertwitter/static/media/5588665.8d7160ed6120326563c9.jpg",
+    "static/media/logo.png": "/bettertwitter/static/media/logo.8c20dfa00a83b757d50e.png",
+    "static/media/logo-bg.png": "/bettertwitter/static/media/logo-bg.3974e19492ef3a96e379.png",
+    "index.html": "/bettertwitter/index.html",
+    "main.33c1544a.css.map": "/bettertwitter/static/css/main.33c1544a.css.map",
+    "main.326be0be.js.map": "/bettertwitter/static/js/main.326be0be.js.map"
   },
   "entrypoints": [
-    "static/css/main.947d530d.css",
-    "static/js/main.dc55672c.js"
+    "static/css/main.33c1544a.css",
+    "static/js/main.326be0be.js"
   ]
 }
